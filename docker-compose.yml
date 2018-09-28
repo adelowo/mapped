@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  consul-server-bootstrap:
+    image: consul:latest
+
+    ports:
+      - "1400:8400"
+      - "1500:8500"
+      - "1600:8600"
+    command: "agent -server -ui -client 0.0.0.0 -bootstrap"
+
+  mongo:
+    image: mongo
+    ports:
+      - "17017:27017"
+
+  redis_master:
+    image: redis:latest
+    ports:
+      - "1379:6379"

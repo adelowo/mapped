@@ -31,6 +31,11 @@ a ___convoluted, sophisticated, web-scale___ url shortner with modern practices.
   - JS (React)
 
 
+### Tests
+
+-  `MAPPED_CONSUL_ADDR` for consul server to use during tests.
+
+
 ### RoadMap
 
 - [ ] Dashboard

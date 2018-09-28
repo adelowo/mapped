@@ -10,7 +10,9 @@ import (
 const appKey = "mapped/config"
 
 type Configuration struct {
-	MongoDB string `json:"mongo_db"`
+	MongoDB  string `json:"mongo_db"`
+	HTTPPort string `json:"-"`
+	ServerID string `json:"-"`
 }
 
 func FromConsul(client *consul.Client) (*Configuration, error) {
