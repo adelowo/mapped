@@ -1,0 +1,34 @@
+workspace:
+  base: /go
+  path: src/github.com/adelowo/mapped
+
+pipeline:
+  fmt_check:
+    image: golang
+    commands:
+      - make verify_goimports
+      - make fmt-check
+
+  vet:
+    image: golang
+    commands:
+      - make dependencies
+      - make vet
+
+  integration:
+    image: golang
+    environment:
+      - CONSUL_HTTP_ADDR=discovery:8500
+    commands:
+      - make dependencies
+      - make integration_tests
+
+services:
+  discovery:
+    image: consul:latest
+
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+    command: "agent -dev"
