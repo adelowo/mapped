@@ -99,6 +99,7 @@ func main() {
 
 	<-shutDownChan
 	bufferedWriter.Flush()
+	registrar.DeRegister(svc)
 }
 
 func ipAddr() (net.IP, error) {

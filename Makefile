@@ -1,4 +1,4 @@
-PKG := github.com/adelowo/mapped/cmd
+PKG := github.com/adelowo/mapped/cmd/mapped
 PKG_PACKAGES := github.com/adelowo/mapped
 # VERSION := $(shell git describe --abbrev=0 --tags)
 PKG_LIST := $(shell go list ${PKG_PACKAGES}/... | grep -v /vendor/)
