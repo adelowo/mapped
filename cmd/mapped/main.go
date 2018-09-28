@@ -11,6 +11,7 @@ import (
 
 	"github.com/adelowo/gotils/registry"
 	"github.com/adelowo/mapped/config"
+	"github.com/adelowo/mapped/transport/web"
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/logfmt"
 	consul "github.com/hashicorp/consul/api"
@@ -29,6 +30,8 @@ func main() {
 		httpAddr   = flag.String("http.addr", ":1400", "Port to run HTTP server at")
 		consulAddr = flag.String("discovery.consul", "localhost:1500", "Consul discovery address")
 	)
+
+	flag.Parse()
 
 	shutDownChan := make(chan os.Signal)
 	signal.Notify(shutDownChan, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
@@ -96,6 +99,15 @@ func main() {
 	}
 
 	logger.Logger.Handler = logfmt.New(bufferedWriter)
+
+	srv := &web.Server{
+		Cfg:    cfg,
+		Logger: logger,
+	}
+
+	go func(srv *web.Server) {
+		srv.Start()
+	}(srv)
 
 	<-shutDownChan
 	bufferedWriter.Flush()
